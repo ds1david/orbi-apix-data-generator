@@ -1,0 +1,25 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+trigger:
+  branches:
+    include:
+    - refs/heads/release/*
+
+variables:
+- group: AppSecFlow-ENV
+
+resources:
+  repositories:
+    - repository: Orbi.Manifest-Azure 
+      name: "Realize-Microsserviços/Orbi.Manifest-Azure"
+      refs: refs/heads/master
+      type: git
+      trigger: none
+
+jobs:
+- template: pipelines-azure-devops/azure-pipelines-appsecflowSAST.yml@Orbi.Manifest-Azure
+  parameters: 
+    CODE_PROJECT_APP: $(CODE_PROJECT_ORBI-APIX-DATA-GENERATOR)
+    FLOW_API_KEY: $(FLOW_API_KEY)

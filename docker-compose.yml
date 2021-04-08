@@ -1,0 +1,35 @@
+version: '3.6'
+
+services:
+
+  mongo:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: user
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: database
+    command: [--auth]
+    restart: always
+    ports:
+      - 27017:27017
+    networks:
+      - compose-network
+
+  mysql:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: database
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    networks:
+      - compose-network
+
+networks:
+  compose-network:
+    driver: bridge
